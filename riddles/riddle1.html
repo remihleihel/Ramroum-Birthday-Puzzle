@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Riddle 1 - Memory Map</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <h1>🗺️ Riddle 1: Memory Map</h1>
+  <p><strong>Riddle:</strong> "Hal map ma ela tor2at, ma ela hdoud, w ma btekhlas. Fiya osas we're creating b mshewirna w rh ndall nekteba la wa2et tawil. What am I? (answer in english)"</p>
+  <form onsubmit="checkAnswer(event)">
+    <input type="text" id="answer" placeholder="Your answer..." required>
+    <button type="submit">Submit</button>
+  </form>
+  <div id="result"></div>
+  <div id="gift" style="display: none;">
+    <h2>🎁 Your Gift: Memory Map</h2>
+    <p>Here’s our evolving world map of memories. Click on a location to reveal what happened there.</p>
+    <iframe src="../map/index.html" width="100%" height="400px" style="border:none;"></iframe>
+  </div>
+
+  <script>
+    function checkAnswer(e) {
+      e.preventDefault();
+      const answer = document.getElementById('answer').value.trim().toLowerCase();
+      const validAnswers = ['map', 'memory map', 'memories', 'memory'];
+      if (validAnswers.includes(answer)) {
+        document.getElementById('result').innerHTML = '<p class="success">✅ Correct!</p>';
+        document.getElementById('gift').style.display = 'block';
+        localStorage.setItem('riddle1_solved', 'true');
+      } else {
+        document.getElementById('result').innerHTML = '<p class="error">❌ Try again!</p>';
+      }
+    }
+
+    // Auto-show gift if already solved
+    if (localStorage.getItem('riddle1_solved') === 'true') {
+      document.getElementById('gift').style.display = 'block';
+    }
+  </script>
+</body>
+</html>

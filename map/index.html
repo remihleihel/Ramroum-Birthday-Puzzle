@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" rel="stylesheet" />
+  <meta charset="utf-8" />
+  <title>Memory Map</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <style>
+  #map { height: 100%; width: 100%; }
+  body, html { margin: 0; padding: 0; height: 100%; }
+  .popup-img {
+    max-width: 100px;
+    margin: 4px;
+    border-radius: 6px;
+    display: inline-block;
+  }
+  </style>
+</head>
+<body>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="map.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+</body>
+</html>

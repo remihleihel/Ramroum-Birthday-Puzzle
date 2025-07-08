@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Riddle 2</title>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <h1>🛏️ Riddle 2</h1>
+  <p><strong>Riddle:</strong><br>
+    "I'm sometimes soft, sometimes firm.<br>
+    You use me in the morning and at night.<br>
+    I love when you ride me, just hold on tight."
+  </p>
+
+  <form onsubmit="checkAnswer(event)">
+    <input type="text" id="answer" placeholder="Your answer..." required />
+    <button type="submit">Submit</button>
+  </form>
+
+  <div id="result"></div>
+
+  <div id="gift" style="display: none;">
+    <h2>🎁 Your Gift</h2>
+    <p>You earned a <strong>15-minute massage</strong> 😏<br>
+    And here’s your first digit: <strong style="font-size: 1.4em;">1</strong> 7fazi la2an rh terja3e t3ouzi xD</p>
+  </div>
+
+  <script>
+    function checkAnswer(e) {
+      e.preventDefault();
+      const answer = document.getElementById('answer').value.trim().toLowerCase();
+      if (answer === 'pillow') {
+        document.getElementById('result').innerHTML = '<p class="success">✅ Correct!</p>';
+        document.getElementById('gift').style.display = 'block';
+        localStorage.setItem('riddle2_solved', 'true');
+      } else {
+        document.getElementById('result').innerHTML = '<p class="error">❌ Try again!</p>';
+      }
+    }
+
+    // Show gift if already solved
+    if (localStorage.getItem('riddle2_solved') === 'true') {
+      document.getElementById('gift').style.display = 'block';
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Riddle 3</title>
+  <link rel="stylesheet" href="../style.css" />
+</head>
+<body>
+  <h1>🎈 Riddle 3</h1>
+  <p><strong>Riddle:</strong><br>
+    "I come in many shapes and sizes.<br>
+    I get blown to feel good.<br>
+    You wrap your lips around me,<br>
+    But when I pop, it’s over."
+  </p>
+
+  <form onsubmit="checkAnswer(event)">
+    <input type="text" id="answer" placeholder="Your answer..." required />
+    <button type="submit">Submit</button>
+  </form>
+
+  <div id="result"></div>
+
+  <div id="gift" style="display: none;">
+    <p>😏 Za3ra Ramroumii<br>
+    Bas eh balloon :p. Ma elik reward hl marra... t7ar2ase ..</p>
+  </div>
+
+  <script>
+    function checkAnswer(e) {
+      e.preventDefault();
+      const answer = document.getElementById('answer').value.trim().toLowerCase();
+      const validAnswers = ['balloon'];
+      if (validAnswers.includes(answer)) {
+        document.getElementById('result').innerHTML = '<p class="success">✅ Correct!</p>';
+        document.getElementById('gift').style.display = 'block';
+        localStorage.setItem('riddle3_solved', 'true');
+      } else {
+        document.getElementById('result').innerHTML = '<p class="error">❌ Try again ya za3ra 😉</p>';
+      }
+    }
+
+    if (localStorage.getItem('riddle3_solved') === 'true') {
+      document.getElementById('gift').style.display = 'block';
+    }
+  </script>
+</body>
+</html>

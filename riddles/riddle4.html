@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Riddle 4</title>
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    .hidden { display: none; }
+    .blurred { filter: blur(40px); transition: filter 1.5s ease; cursor: pointer; }
+    .sharp { filter: blur(0); }
+    .heart { font-size: 48px; cursor: pointer; transition: transform 0.2s ease; }
+    .heartbeat { animation: pulse 1s infinite; }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+    .modal {
+      background: white;
+      padding: 20px;
+      max-width: 600px;
+      margin: 20px auto;
+      border-radius: 8px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    }
+  </style>
+</head>
+<body>
+  <h1>💌 Riddle 4: Follow the Heartbeat</h1>
+  <p>Sometimes love is written between the lines<span id="dot">.</span></p>
+
+  <div id="step2" class="hidden">
+    <p><strong>This memory is hidden… clear it to continue.</strong></p>
+    <img id="memoryImg" src="../photos/riddle4/riddle4.jpeg" alt="Memory" class="blurred" width="300" />
+  </div>
+
+  <div id="step3" class="hidden">
+    <p><strong>Wen rehna men ba3da?</strong></p>
+    <form onsubmit="checkLocation(event)">
+      <input type="text" id="location" placeholder="Enter location" required />
+      <button type="submit">Submit</button>
+    </form>
+    <p id="locResult"></p>
+  </div>
+
+  <div id="heartStep" class="hidden">
+    <p>Click the heart twice 💓</p>
+    <div id="heart" class="heart heartbeat">❤️</div>
+  </div>
+
+  <div id="finalLetter" class="hidden modal">
+    <p><strong>Reward:</strong></p>
+    <p id="letter">
+      Hi Ramroumii<br><br>
+      hal marra l reward is heartfelt :p<br><br>
+      B3rf men dall n2oula, bas 3anjad bade yeke t3rfe enik ahla shi sar b hayete.<br>
+      W bhebbik aktr mn mafike tetkhayale, w msh momken wa2ef hebik.<br>
+      Hayetna rh tkoun challenging ymkn eh, bs i wouldn't want it any other way.<br>
+      Eza fi shi t3alamto mn kel batikhete.. houwe eno kl shi helo, 2eemto b naterto w sou3oubto.<br>
+      Fa it's only fitting eno tkoun hayetna sa3be, l2no rh tkoun ajmal hayet w worth kel di2et ta3ab.<br>
+      w iknw bten2aze aw2at mnl challenges, bas ana deep down i look forward elon, la2an it means already 3m nbalesh hayetna sawa.<br>
+      Ahla shi 3ande bs shoufik mabsouta, fa bade yeke t3rfe eno i'll always do my best la tdalle mabsouta. Kel hayete.<br><br>
+      Love you ramrmoumi.<br>
+    </p>
+    <p><strong>Digit #2:</strong> <span style="font-size: 1.5em">2</span></p>
+  </div>
+
+  <script>
+    const dot = document.getElementById('dot');
+    const step2 = document.getElementById('step2');
+    const step3 = document.getElementById('step3');
+    const heartStep = document.getElementById('heartStep');
+    const memoryImg = document.getElementById('memoryImg');
+    const finalLetter = document.getElementById('finalLetter');
+    let heartClicks = 0;
+
+    dot.addEventListener('click', () => {
+      step2.classList.remove('hidden');
+    });
+
+    memoryImg.addEventListener('click', () => {
+      memoryImg.classList.remove('blurred');
+      memoryImg.classList.add('sharp');
+      setTimeout(() => step3.classList.remove('hidden'), 1000);
+    });
+
+    function checkLocation(e) {
+      e.preventDefault();
+      const input = document.getElementById('location').value.trim().toLowerCase();
+      const accepted = ['blend'];
+      if (accepted.includes(input)) {
+        document.getElementById('locResult').innerText = '✅ Correct';
+        heartStep.classList.remove('hidden');
+      } else {
+        document.getElementById('locResult').innerText = '❌ Try again';
+      }
+    }
+
+    document.getElementById('heart').addEventListener('click', () => {
+      heartClicks++;
+      if (heartClicks === 2) {
+        finalLetter.classList.remove('hidden');
+        localStorage.setItem('riddle4_solved', 'true');
+      }
+    });
+
+    if (localStorage.getItem('riddle4_solved') === 'true') {
+      finalLetter.classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>

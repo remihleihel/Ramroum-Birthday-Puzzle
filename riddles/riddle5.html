@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Riddle 5 - The Trail</title>
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    .safe {
+      width: 200px;
+      height: 200px;
+      background-image: url('../photos/riddle5/safe.png');
+      background-size: cover;
+      background-position: center;
+      border-radius: 12px;
+      margin: 30px auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: inset 0 0 10px #000, 0 0 20px rgba(0, 0, 0, 0.7);
+      transition: transform 0.3s, box-shadow 0.3s;
+      position: relative;
+      color: transparent;
+    }
+    .safe::before {
+      content: '';
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: radial-gradient(#aaa, #666);
+      box-shadow: inset 0 0 5px #000;
+      top: 10px;
+      right: 10px;
+      animation: spin 3s linear infinite;
+    }
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .safe.shake {
+      animation: shake 0.5s;
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      50% { transform: translateX(5px); }
+      75% { transform: translateX(-5px); }
+    }
+    .hidden { display: none; }
+    .modal {
+      background: white;
+      padding: 20px;
+      max-width: 600px;
+      margin: 20px auto;
+      border-radius: 8px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    }
+  </style>
+</head>
+<body>
+  <h1>🧩 Riddle 5: The Trail</h1>
+  <p>This gift isn’t on this page... it’s something <strong>you got me</strong>. Go find it on TRU 🧠
+  <br><br>Did you find the code?</p>
+
+  <div class="safe" id="safeBox">🔒</div>
+  <form id="codeForm" onsubmit="unlockSafe(event)">
+    <input type="text" id="safeCode" placeholder="Enter code (4 digits)" required maxlength="4" />
+    <button type="submit">Unlock</button>
+  </form>
+
+  <div id="riddleBox" class="hidden">
+    <p><strong>Elik hazzoura bhl safe...</strong></p>
+    <p>"ejo w ma ba2 fallo. w saro bosses 3layna ... ma32anno 3andon their own country"</p>
+    <form onsubmit="checkPerfumeAnswer(event)">
+      <input type="text" id="perfumeAnswer" placeholder="Enter your answer..." required />
+      <button type="submit">Submit</button>
+    </form>
+    <p id="perfumeResult"></p>
+  </div>
+
+  <div id="gift" class="hidden modal">
+    <h2>🎁 Your Gift: Wa akhiran... A Sample of My Armani Perfume</h2>
+    <img src="../photos/riddle5/armani.png" alt="Armani Perfume" width="200" />
+  </div>
+
+  <script>
+    function unlockSafe(e) {
+      e.preventDefault();
+      const code = document.getElementById('safeCode').value.trim();
+      const safeBox = document.getElementById('safeBox');
+      if (code === "1141") {
+        safeBox.innerText = "🔓";
+        document.getElementById('riddleBox').classList.remove('hidden');
+      } else {
+        safeBox.classList.add('shake');
+        setTimeout(() => safeBox.classList.remove('shake'), 500);
+      }
+    }
+
+    function checkPerfumeAnswer(e) {
+      e.preventDefault();
+      const answer = document.getElementById('perfumeAnswer').value.trim().toLowerCase();
+      if (answer === "arman") {
+        document.getElementById('perfumeResult').innerText = '✅ Correct!';
+        document.getElementById('gift').classList.remove('hidden');
+        localStorage.setItem('riddle5_solved', 'true');
+      } else {
+        document.getElementById('perfumeResult').innerText = '❌ Try again';
+      }
+    }
+
+    if (localStorage.getItem('riddle5_solved') === 'true') {
+      document.getElementById('gift').classList.remove('hidden');
+    }
+  </script>
+</body>
+</html>

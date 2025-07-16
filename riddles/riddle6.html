@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Riddle 6</title>
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    .hidden { display: none; }
+    .modal {
+      background: white;
+      padding: 20px;
+      max-width: 600px;
+      margin: 20px auto;
+      border-radius: 8px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    }
+  </style>
+</head>
+<body>
+  <h1>🧩 Riddle 6</h1>
+  <p>This one is a bit different... Try to crack the riddle below:</p>
+
+  <p><strong>Riddle:</strong> "It's something you never wanted, It's something I wouldn't do for you, I recently made a phone ... What am I?"</p>
+  <form onsubmit="checkRiddle6(event)">
+    <input type="text" id="answer1" placeholder="Your answer..." required />
+    <button type="submit">Submit</button>
+  </form>
+
+  <div id="teaseMsg" class="hidden">
+    <p>That's right, you get nothing this time 😈... but you do get the third digit... if you can find it on TRU.</p>
+    <p>Here’s your next riddle:</p>
+    <p><em>He likes you, me, and coffee. Who is he?</em></p>
+    <form onsubmit="checkProfileName(event)">
+      <input type="text" id="profileAnswer" placeholder="His name..." required />
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <div id="digitCheck" class="hidden">
+    <p>Great! Now... what's the digit he left for you?</p>
+    <form onsubmit="checkFinalDigit(event)">
+      <input type="text" id="finalDigit" placeholder="Enter the digit..." required maxlength="1" />
+      <button type="submit">Submit</button>
+    </form>
+    <p id="finalDigitResult"></p>
+  </div>
+
+  <script>
+    function checkRiddle6(e) {
+      e.preventDefault();
+      const answer = document.getElementById('answer1').value.trim().toLowerCase();
+      if (answer === "nothing") {
+        document.getElementById('teaseMsg').classList.remove('hidden');
+      } else {
+        alert("❌ Try again!");
+      }
+    }
+
+    function checkProfileName(e) {
+      e.preventDefault();
+      const validNames = ["mehyo", "me7yo", "elmoh", "muhyedine"];
+      const name = document.getElementById('profileAnswer').value.trim().toLowerCase();
+      if (validNames.includes(name)) {
+        document.getElementById('digitCheck').classList.remove('hidden');
+      } else {
+        alert("❌ Not quite. Try again.");
+      }
+    }
+
+    function checkFinalDigit(e) {
+      e.preventDefault();
+      const digit = document.getElementById('finalDigit').value.trim();
+      if (digit === "1") {
+        document.getElementById('finalDigitResult').innerText = "✅ That's correct... you're getting so close to the final stage. Stay tuned!";
+        localStorage.setItem('riddle6_solved', 'true');
+      } else {
+        document.getElementById('finalDigitResult').innerText = "❌ That's not it.";
+      }
+    }
+
+    if (localStorage.getItem('riddle6_solved') === 'true') {
+      document.getElementById('finalDigitResult').innerText = "✅ You already solved this one!";
+    }
+  </script>
+</body>
+</html>

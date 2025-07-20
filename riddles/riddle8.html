@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Riddle 8</title>
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    .hidden { display: none; }
+    iframe { border: none; margin: 20px 0; width: 100%; height: 400px; }
+    .modal { background: white; padding: 20px; max-width: 600px; margin: 20px auto; border-radius: 8px; box-shadow: 0 0 15px rgba(0,0,0,0.3); }
+  </style>
+</head>
+<body>
+  <h1>🎨 Riddle 8:</h1>
+
+  <div id="step1">
+    <p><strong>Riddle:</strong> "Mafike tde2e fiye,<br>
+    bas fiye farje hayalla shi fike,<br>
+    Ana ma3ik all the time one way or another. What am I?"</p>
+    <form onsubmit="checkFirst(event)">
+      <input type="text" id="answer1" placeholder="Your answer..." required />
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <div id="step2" class="hidden">
+    <p><strong>Riddle:</strong> "I'm made of characters,<br>
+    but I'm not a novel.<br>
+    I draw without a brush, and lines are my puzzle.<br>
+    What am I?"</p>
+    <form onsubmit="checkSecond(event)">
+      <input type="text" id="answer2" placeholder="Your answer..." required />
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <div id="asciiReveal" class="hidden">
+    <p><strong>✅ Only took 5+ Hours...</strong></p>
+    <iframe src="../ascii/colored_ascii_art_highres.html"></iframe>
+    <p>Ba3d fi</p>
+    <p><strong>Final Riddle:</strong> "I start everything but hold no weight.<br>
+    In codes I’m there, but I’m no trait.<br>
+    I’m shaped like a circle, a perfect round."</p>
+    <form onsubmit="checkFinalZero(event)">
+      <input type="text" id="finalAnswer" placeholder="Enter your answer..." required />
+      <button type="submit">Submit</button>
+    </form>
+    <p id="finalResult"></p>
+  </div>
+
+  <script>
+    function checkFirst(e) {
+      e.preventDefault();
+      const val = document.getElementById('answer1').value.trim().toLowerCase();
+      if (val === 'reflection') {
+        document.getElementById('step1').classList.add('hidden');
+        document.getElementById('step2').classList.remove('hidden');
+      } else {
+        alert("❌ Try again!");
+      }
+    }
+
+    function checkSecond(e) {
+      e.preventDefault();
+      const val = document.getElementById('answer2').value.trim().toLowerCase();
+      if (val === 'ascii') {
+        document.getElementById('step2').classList.add('hidden');
+        document.getElementById('asciiReveal').classList.remove('hidden');
+      } else {
+        alert("❌ Try again!");
+      }
+    }
+
+    function checkFinalZero(e) {
+      e.preventDefault();
+      const val = document.getElementById('finalAnswer').value.trim().toLowerCase();
+      if (val === '0' || val === 'zero') {
+        document.getElementById('finalResult').innerText = "✅ You now have all the digits... Stay tuned ramroumii :p";
+        localStorage.setItem('riddle8_solved', 'true');
+      } else {
+        document.getElementById('finalResult').innerText = "❌ That's not correct.";
+      }
+    }
+
+    if (localStorage.getItem('riddle8_solved') === 'true') {
+      document.getElementById('step1').classList.add('hidden');
+      document.getElementById('step2').classList.add('hidden');
+      document.getElementById('asciiReveal').classList.remove('hidden');
+      document.getElementById('finalResult').innerText = "✅ You now have all the digits... Stay tuned ramroumii :p";
+    }
+  </script>
+</body>
+</html>

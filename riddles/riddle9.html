@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Riddle 9</title>
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    .hidden { display: none; }
+    img { max-width: 100%; border-radius: 8px; margin: 20px 0; }
+  </style>
+</head>
+<body>
+  <h1>Riddle 9: The Puzzle Trail</h1>
+
+  <!-- Step 1 -->
+  <div id="step1">
+    <p><strong>Riddle 1:</strong> "Shou kenit awal ticket akhadta 3anik? ayya project?"</p>
+    <form onsubmit="checkFirst(event)">
+      <input type="text" id="answer1" placeholder="Your answer..." required />
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <!-- Step 2 -->
+  <div id="step2" class="hidden">
+    <p><strong>Follow-up:</strong> "What was the applicative server name used for the task?"</p>
+    <form onsubmit="checkSecond(event)">
+      <input type="text" id="answer2" placeholder="Your answer..." required />
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <!-- Step 3 -->
+  <div id="step3" class="hidden">
+    <p><strong>Spot the differences in this picture 👀</strong></p>
+    <img src="../photos/difference.png" alt="Spot the Difference" />
+    <p>Done spotting? How many differences did you find?</p>
+    <form onsubmit="checkDifferences(event)">
+      <input type="number" id="diffCount" placeholder="Enter number..." required />
+      <button type="submit">Submit</button>
+    </form>
+    <p id="diffResult"></p>
+  </div>
+
+  <!-- Step 4 -->
+  <div id="step4" class="hidden">
+    <p><strong>Riddle 3:</strong><br>
+    "Mesh kelme, wala ra2em,<br>
+    ma3ik yene msh men zamen.<br>
+    Ma droure t2arrbe wala t2akhre ba2a<br>
+    Sheftine bas b3d ma sta3maltine"</p>
+    <form onsubmit="checkPIN(event)">
+      <input type="text" id="pinAnswer" placeholder="Your answer..." required />
+      <button type="submit">Submit</button>
+    </form>
+    <p id="finalMsg"></p>
+  </div>
+
+  <script>
+    function checkFirst(e) {
+      e.preventDefault();
+      const val = document.getElementById('answer1').value.trim().toLowerCase();
+      if (val === 'sbsa') {
+        document.getElementById('step1').classList.add('hidden');
+        document.getElementById('step2').classList.remove('hidden');
+      } else {
+        alert('❌ Try again');
+      }
+    }
+	function checkDifferences(e) {
+      e.preventDefault();
+      const val = document.getElementById('diffCount').value.trim();
+      if (val === '3') {
+        document.getElementById('diffResult').innerText = "✅ That’s right! Now let’s move on...";
+        setTimeout(() => showRiddle3(), 1000);
+      } else {
+        document.getElementById('diffResult').innerText = "❌ Not quite... look again!";
+      }
+    }
+
+    function checkSecond(e) {
+      e.preventDefault();
+      const val = document.getElementById('answer2').value.trim().toLowerCase();
+      if (val === 'mx36258vm') {
+        document.getElementById('step2').classList.add('hidden');
+        document.getElementById('step3').classList.remove('hidden');
+      } else {
+        alert('❌ Nope, try again');
+      }
+    }
+
+    function showRiddle3() {
+      document.getElementById('step3').classList.add('hidden');
+      document.getElementById('step4').classList.remove('hidden');
+    }
+
+    function checkPIN(e) {
+      e.preventDefault();
+      const val = document.getElementById('pinAnswer').value.trim().toLowerCase();
+      if (val === '1210' || val === '1 2 1 0') {
+        document.getElementById('finalMsg').innerText = "✅ You already cracked the code… Bas ya tora wen rh t3ouzi ...?              STAY TUNED RAMROUMIII <3 <3";
+      } else {
+        document.getElementById('finalMsg').innerText = "❌ Not quite... try again or think back to the digits.";
+      }
+    }
+  </script>
+</body>
+</html>

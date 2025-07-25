@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EXCEPTION</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+    }
+    #riddle-screen {
+      margin-top: 40px;
+    }
+    #puzzle-board, #pieces {
+      display: grid;
+      grid-template-columns: repeat(4, 150px);
+      grid-template-rows: repeat(3, 100px);
+      gap: 5px;
+      justify-content: center;
+      margin: 20px auto;
+    }
+    .slot, .piece {
+      width: 150px;
+      height: 100px;
+      border: 1px solid #ccc;
+      background-color: #f0f0f0;
+    }
+    .piece {
+      cursor: grab;
+    }
+    .hidden {
+      display: none;
+    }
+    #win-message {
+      font-size: 24px;
+      color: green;
+      display: none;
+    }
+    #undo-btn {
+      margin-top: 10px;
+      padding: 8px 12px;
+      font-size: 16px;
+    }
+    #final-screen {
+      display: none;
+      font-size: 48px;
+      color: #d400ff;
+      animation: pulse 1s infinite;
+      margin-top: 50px;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.1); opacity: 0.7; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <h1>EXCEPTION</h1>
+
+  <div id="riddle-screen">
+    <p><strong>Riddle:</strong> "Tole3lik riddles zyede Ramroumii...I come together piece by piece, a picture forms with gentle ease. Takes hours sometimes and sometimes it's easy.
+	Rah ykoun 3anna ktir mena b baytna"</p>
+    <form onsubmit="checkRiddle(event)">
+      <input type="text" id="riddleAnswer" placeholder="Your answer..." required />
+      <button type="submit">Submit</button>
+    </form>
+    <p id="riddle-feedback"></p>
+  </div>
+
+  <div id="puzzle-container" class="hidden">
+    <div id="pieces"></div>
+    <div id="puzzle-board">
+      <div class="slot" data-slot="piece_0_0"></div>
+      <div class="slot" data-slot="piece_0_1"></div>
+      <div class="slot" data-slot="piece_0_2"></div>
+      <div class="slot" data-slot="piece_0_3"></div>
+      <div class="slot" data-slot="piece_1_0"></div>
+      <div class="slot" data-slot="piece_1_1"></div>
+      <div class="slot" data-slot="piece_1_2"></div>
+      <div class="slot" data-slot="piece_1_3"></div>
+      <div class="slot" data-slot="piece_2_0"></div>
+      <div class="slot" data-slot="piece_2_1"></div>
+      <div class="slot" data-slot="piece_2_2"></div>
+      <div class="slot" data-slot="piece_2_3"></div>
+    </div>
+    <button id="undo-btn">Undo Last Move</button>
+  </div>
+
+  <div id="win-message">🎉 Ah ya Ramroumii ya batalee! 🎉</div>
+  <div id="final-screen">2 MORE DAYS TO GO HAYETEEE, BHEBBIK YA NEKDE</div>
+
+  <script>
+    const pieceIds = [
+      "piece_0_0", "piece_0_1", "piece_0_2", "piece_0_3",
+      "piece_1_0", "piece_1_1", "piece_1_2", "piece_1_3",
+      "piece_2_0", "piece_2_1", "piece_2_2", "piece_2_3"
+    ];
+
+    const piecesContainer = document.getElementById('pieces');
+    const undoBtn = document.getElementById('undo-btn');
+    const moveHistory = [];
+
+    function checkRiddle(e) {
+      e.preventDefault();
+      const val = document.getElementById('riddleAnswer').value.trim().toLowerCase();
+      if (val === 'puzzle') {
+        document.getElementById('riddle-screen').classList.add('hidden');
+        document.getElementById('puzzle-container').classList.remove('hidden');
+      } else {
+        document.getElementById('riddle-feedback').innerText = '❌ Wrong answer! Try again.';
+      }
+    }
+
+    function shuffle(array) {
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+    }
+
+    shuffle(pieceIds);
+
+    pieceIds.forEach(id => {
+      const img = document.createElement('img');
+      img.src = "../puzzle/" + id + ".jpeg";
+      img.id = id;
+      img.className = "piece";
+      img.draggable = true;
+      piecesContainer.appendChild(img);
+    });
+
+    const slots = document.querySelectorAll('.slot');
+
+    document.addEventListener('dragstart', e => {
+      if (e.target.classList.contains('piece')) {
+        e.dataTransfer.setData('text/plain', e.target.id);
+      }
+    });
+
+    slots.forEach(slot => {
+      slot.addEventListener('dragover', e => {
+        e.preventDefault();
+      });
+
+      slot.addEventListener('drop', e => {
+        e.preventDefault();
+        const pieceId = e.dataTransfer.getData('text/plain');
+        const draggedPiece = document.getElementById(pieceId);
+        const parent = draggedPiece.parentNode;
+
+        if (slot.childNodes.length === 0) {
+          slot.appendChild(draggedPiece);
+          moveHistory.push({ piece: draggedPiece, from: parent });
+
+          if (slot.dataset.slot === pieceId) {
+            draggedPiece.style.border = '2px solid green';
+          } else {
+            draggedPiece.style.border = '2px solid red';
+          }
+        }
+
+        checkWin();
+      });
+    });
+
+    undoBtn.addEventListener('click', () => {
+      const lastMove = moveHistory.pop();
+      if (lastMove && lastMove.from) {
+        lastMove.from.appendChild(lastMove.piece);
+        lastMove.piece.style.border = '1px solid #ccc';
+      }
+    });
+
+    function checkWin() {
+      const allCorrect = Array.from(slots).every(slot => {
+        const child = slot.firstChild;
+        return child && child.id === slot.dataset.slot;
+      });
+
+      if (allCorrect) {
+        document.getElementById('win-message').style.display = 'none';
+        document.getElementById('puzzle-container').style.display = 'none';
+        document.getElementById('final-screen').style.display = 'block';
+      }
+    }
+  </script>
+</body>
+</html>

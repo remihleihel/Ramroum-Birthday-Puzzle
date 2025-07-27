@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Final Riddle</title>
+  <link rel="stylesheet" href="../style.css" />
+  <style>
+    body {
+      font-family: 'Georgia', serif;
+      background: linear-gradient(to bottom, #fff8e1, #ffe0f0);
+      text-align: center;
+      padding: 40px;
+      color: #5e005e;
+    }
+    .intro-poem, .recap {
+      margin-bottom: 40px;
+      font-size: 20px;
+    }
+    .hidden { display: none; }
+    input[type="text"] {
+      padding: 10px;
+      font-size: 18px;
+      width: 300px;
+      margin: 20px auto;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 18px;
+      background-color: #d400ff;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 6px;
+    }
+    #final-message {
+      font-size: 28px;
+      color: #b100cd;
+      margin-top: 40px;
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.05); opacity: 0.8; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: -1;
+    }
+  </style>
+</head>
+<body>
+  <h1>🌟 The Final Riddle 🌟</h1>
+
+  <p class="intro-poem">
+    You solved and laughed, fattashte w damma3te,<br>
+    One final riddle, ymkn..<br>
+    Before we end this magic...
+  </p>
+
+  <div class="recap">
+    <h2>🔁 Memory Recap</h2>
+    <p>From the memory map... to the ASCII hugs,<br>
+    From perfume samples to teasing bugs.<br>
+    From cameras, pixels...<br>
+    7allayte kel shi Ramroumi</p>
+  </div>
+
+  <p><strong>Final Riddle:</strong><br>
+    "Deyman m3k, seen aw la2,<br>
+    Through every riddle, plan, and plot.<br>
+    Not time, not touch .. shi a2wa ...<br>
+    The reason we began kel hls hi to begin with."
+  </p>
+
+  <form onsubmit="checkFinalAnswer(event)">
+    <input type="text" id="finalInput" placeholder="Your answer..." required />
+    <br>
+    <button type="submit">Submit</button>
+  </form>
+
+  <p id="final-feedback"></p>
+
+  <div id="final-message" class="hidden">
+    ❤️ It was always Love. Always You. Always Us. ❤️<br><br>
+    Ymkn ha khetmit l riddles... bs it will never be khetmetna. Can't wait adde hayete ma3ik ❤️<br><br>
+    🎉💛 YOU DID IT, RAMROUMII 💛🎉
+	3a2bel l 100 ya albe w bade yeke t3rfe enik ahamma shi b hayete. Hala2 w deyman ❤️❤️❤️
+  </div>
+
+  <canvas id="celebration"></canvas>
+
+  <script>
+    function checkFinalAnswer(e) {
+      e.preventDefault();
+      const input = document.getElementById('finalInput').value.trim().toLowerCase();
+      if (input === 'love') {
+        document.getElementById('final-feedback').innerText = '';
+        document.getElementById('final-message').classList.remove('hidden');
+        startCelebration();
+      } else {
+        document.getElementById('final-feedback').innerText = '❌ Try again, this one is from the heart.';
+      }
+    }
+
+    function startCelebration() {
+      const canvas = document.getElementById('celebration');
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+
+      const hearts = Array.from({length: 80}, () => createHeart());
+
+      function createHeart() {
+        return {
+          x: Math.random() * canvas.width,
+          y: Math.random() * canvas.height,
+          size: Math.random() * 6 + 6,
+          dx: (Math.random() - 0.5) * 2,
+          dy: Math.random() * 1 + 1,
+          color: `hsl(${Math.random() * 360}, 100%, 75%)`
+        };
+      }
+
+      function animate() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        hearts.forEach(heart => {
+          ctx.beginPath();
+          ctx.fillStyle = heart.color;
+          ctx.moveTo(heart.x, heart.y);
+          ctx.arc(heart.x - heart.size / 2, heart.y - heart.size / 2, heart.size / 2, 0, Math.PI * 2);
+          ctx.arc(heart.x + heart.size / 2, heart.y - heart.size / 2, heart.size / 2, 0, Math.PI * 2);
+          ctx.lineTo(heart.x, heart.y + heart.size);
+          ctx.closePath();
+          ctx.fill();
+
+          heart.y += heart.dy;
+          heart.x += heart.dx;
+          if (heart.y > canvas.height) heart.y = -10;
+          if (heart.x > canvas.width) heart.x = 0;
+          if (heart.x < 0) heart.x = canvas.width;
+        });
+        requestAnimationFrame(animate);
+      }
+      animate();
+    }
+  </script>
+</body>
+</html>

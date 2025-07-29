@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Exceptional Riddle</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #fff5fc;
+      text-align: center;
+      padding: 60px 20px;
+    }
+    h1 {
+      font-size: 2.4em;
+      color: #ff008c;
+      margin-bottom: 25px;
+    }
+    .riddle {
+      font-size: 1.2em;
+      line-height: 1.6;
+      margin-bottom: 30px;
+      color: #444;
+    }
+    input, button {
+      font-size: 16px;
+      padding: 10px;
+      margin-top: 10px;
+    }
+    #response {
+      margin-top: 25px;
+      font-weight: bold;
+      font-size: 1.2em;
+      color: #ff008c;
+    }
+  </style>
+</head>
+<body>
+  <h1>🌟 Exceptional Riddle 🌟</h1>
+  <div class="riddle">
+    my name is tick, bas fike tghanjine.<br>
+    Eza bet2ouline marten betla3 shi akhou maniouke.<br>
+    Wen rayhin bkra?
+  </div>
+  <form onsubmit="checkAnswer(event)">
+    <input type="text" id="answer" placeholder="Your answer..." required />
+    <button type="submit">Submit</button>
+  </form>
+  <div id="response"></div>
+
+  <script>
+    function checkAnswer(e) {
+      e.preventDefault();
+      const val = document.getElementById('answer').value.trim().toLowerCase();
+      const accepted = ['tico', 'tico tico'];
+      if (accepted.includes(val)) {
+        document.getElementById('response').innerText = "✅ That's right, it’s Tico Tico! Atyab ghada bokra 🔥🔥🔥";
+      } else {
+        document.getElementById('response').innerText = "❌ Try again, it's on the tip of your tongue 😉";
+      }
+    }
+  </script>
+</body>
+</html>

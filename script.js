@@ -20,7 +20,8 @@ window.addEventListener('DOMContentLoaded', () => {
     { date: '2025-07-22', title: 'Riddle 8', path: 'riddles/riddle8.html' },
     { date: '2025-07-24', title: 'Riddle 9', path: 'riddles/riddle9.html' },
     { date: '2025-07-26', title: 'Riddle 10', path: 'riddles/riddle10.html' },
-	{ date: '2025-07-28', title: 'Riddle 11', path: 'riddles/riddle11.html' }
+	{ date: '2025-07-28', title: 'Riddle 11', path: 'riddles/riddle11.html' },
+	{ date: '2025-07-28', title: 'Riddle 12', path: 'riddles/riddle12.html' }
   ];
 
   const list = document.getElementById('riddle-list');
